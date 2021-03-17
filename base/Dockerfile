@@ -2,8 +2,9 @@
 
 # Base image for other SlicerDocker platform images
 # (inspired by https://github.com/dit4c/dockerfile-dit4c-container-base)
+# and forked from https://github.com/pieper/SlicerDockers
 FROM ubuntu:20.04
-MAINTAINER pieper@isomics.com
+
 
 # Directories that don't need to be preserved in images
 VOLUME ["/var/cache/apt", "/tmp"]
@@ -43,13 +44,17 @@ EXPOSE 8080
 # Run all processes through supervisord
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
-RUN useradd -m researcher -s /bin/bash && \
+RUN useradd -m researcher -u 1828833439 -s /bin/bash && \
+    groupadd sbmi-bdm-luca -g 1828851584  \
+    usermod -a -G sbmi-bdm-luca researcher \
     gpasswd -a researcher sudo && \
     passwd -d researcher && passwd -u researcher && \
     rm ~researcher/.bashrc ~researcher/.bash_logout ~researcher/.profile && \
     sed -i -e '/^PS1/s/^/#/' /etc/bash.bashrc && \
     sed -i -e '/stdout.*uname/s/^/#/' /etc/pam.d/login && \
     echo 'source /etc/profile.d/prompt.sh' >> /etc/bash.bashrc
+
+
 
 RUN chown -R researcher /var/log/supervisor
 

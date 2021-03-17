@@ -1,11 +1,12 @@
 # DOCKER-VERSION 1.0
 # x11 image for other SlicerDocker platform images
 # (based on https://github.com/dit4c/dockerfile-dit4c-container-x11 debian branch)
+# and forked from https://github.com/pieper/SlicerDockers
+
 
 ARG VERSION="latest"
 
-FROM stevepieper/base:${VERSION}
-MAINTAINER pieper@isomics.com
+FROM lgianca/base-sl:${VERSION}
 
 # Install
 # - MESA DRI drivers for software GLX rendering

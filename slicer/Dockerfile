@@ -1,9 +1,11 @@
 # SlicerDocker platform image
 # (based on https://github.com/dit4c/dockerfile-dit4c-container-slicer)
+# and forked from https://github.com/pieper/SlicerDockers
+
 
 ARG VERSION="latest"
 
-FROM stevepieper/x11:${VERSION}
+FROM lgianca/x11-sl:${VERSION}
 MAINTAINER pieper@isomics.com
 
 RUN apt-get install -y libglu1-mesa
